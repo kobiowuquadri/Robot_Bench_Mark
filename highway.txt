@@ -1,0 +1,97 @@
+This is a Webots controller for highway driving benchmark, written in Python.
+ The program is executed on a simulated vehicle in a virtual environment. 
+ Below is an explanation of the code line-by-line:
+
+python
+Copy code
+from vehicle import Driver
+This line imports the Driver class from the vehicle module. 
+Driver is a helper class that provides methods for controlling the simulated vehicle.
+
+python
+Copy code
+sensorsNames = [
+    'front',
+    'front right 0',
+    'front right 1',
+    'front right 2',
+    'front left 0',
+    'front left 1',
+    'front left 2',
+    'rear',
+    'rear left',
+    'rear right',
+    'right',
+    'left']
+sensors = {}
+This defines a list of names for the distance sensors used by the controller.
+ The sensors variable is initialized as an empty dictionary, which will later store references 
+ to the actual sensor objects.
+
+python
+Copy code
+maxSpeed = 100
+driver = Driver()
+driver.setSteeringAngle(0.0)  # go straight
+The maxSpeed variable is initialized to 100, which is the maximum speed the vehicle can reach. An instance of the Driver class is created, and the initial steering angle is set to 0, so the vehicle starts driving straight.
+
+python
+Copy code
+for name in sensorsNames:
+    sensors[name] = driver.getDistanceSensor('distance sensor ' + name)
+    sensors[name].enable(10)
+This loop initializes the distance sensors. For each sensor name in sensorsNames, the corresponding sensor object is obtained from the Driver instance using the getDistanceSensor() method. The sensor is then enabled with a sampling period of 10 milliseconds.
+
+python
+Copy code
+gps = driver.getGPS('gps')
+gps.enable(10)
+This gets the GPS sensor from the Driver instance and enables it with a sampling period of 10 milliseconds.
+
+python
+Copy code
+camera = driver.getCamera('camera')
+camera.enable(50)
+camera.recognitionEnable(50)
+dest =0
+prevpos = -2
+counter=0
+rightb=5.8
+leftb =2
+average = 0
+dest = 2
+changelane=0
+minx=1000
+miny=1000
+nextcar = 0
+desty = 800
+lim = 7250
+lim2 = 7550
+lim3 = 7890
+lim4 = 7980
+lim5 = 8161
+lim6 = 8350
+lim7 = 8518
+lim8 = 8800
+This gets the camera sensor from the Driver instance, enables it with a sampling period of 50 milliseconds, and initializes some variables used later in the program.
+
+python
+Copy code
+while driver.step() != -1:
+This starts an infinite loop that runs until the simulation is terminated or the step() method of the Driver instance returns -1. The step() method is called repeatedly to simulate the passage of time in the virtual environment.
+
+python
+Copy code
+print(counter)
+x=gps.getValues()
+counter= counter + 1
+This prints the value of the counter variable and gets the current GPS values. The counter variable is incremented to keep track of the number of times the loop has executed.
+
+python
+Copy code
+if((counter > 7045)):#and(counter<8200)):
+This condition checks if the value of the counter variable is greater than 7045. If so, the program enters a section of code that handles the first phase of the driving benchmark
+
+
+
+
