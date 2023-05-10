@@ -40,7 +40,7 @@ camera.enable(50)
 camera.recognitionEnable(50)
 destination =0
 prevpos = -2
-counter=0
+count=0
 rightb=5.8
 leftb =2
 average = 0
@@ -60,10 +60,10 @@ lim7 = 8518
 lim8 = 8800
 while driver.step() != -1:
     # adjust the speed according to the value returned by the front distance sensor
-    print(counter)
+    print(count)
     x=gps.getValues()
-    counter += 1
-    if((counter > 7045)):#and(counter<8200)):
+    count += 1
+    if((count > 7045)):#and(count<8200)):
         
         front_distance = sensors['front'].getValue() 
         extent = sensors['front'].getMaxValue()
@@ -72,39 +72,39 @@ while driver.step() != -1:
         chnage_in_speed = driver.getCurrentSpeed() - speed
         max_speed= 200
         pos = x[0]
-        if(counter < lim):
+        if(count < lim):
             driver.setSteeringAngle(  (1.2)*0.01) 
             #max_speed= 100
-        if(counter >= lim):
+        if(count >= lim):
             
             driver.setSteeringAngle(  (-0.9)*0.01) 
             max_speed= 120
             #max_speed= 50
-            #if(counter > 7990):
+            #if(count > 7990):
             #    driver.setSteeringAngle(  (-1)*0.01)   
             #    max_speed = 120
-        if(counter >= lim2):          
+        if(count >= lim2):          
             driver.setSteeringAngle(  (-1.4)*0.01) 
             max_speed= 100
             #max_speed= 50
             
-        if(counter >= lim3):   
+        if(count >= lim3):   
             max_speed= 80       
             driver.setSteeringAngle(  (-3)*0.01) 
         prevpos = pos
-        if(counter >= lim4):
+        if(count >= lim4):
            driver.setSteeringAngle(  (2.6)*0.01) 
-        if(counter >= lim5):
+        if(count >= lim5):
            max_speed= 100
            driver.setSteeringAngle(  (-0.8)*0.01) 
-        if(counter >= lim6):
+        if(count >= lim6):
            max_speed= 90
            driver.setSteeringAngle(  (-0.89)*0.01)
           
-        if(counter >= lim7):
+        if(count >= lim7):
            max_speed= 90
            driver.setSteeringAngle(  (3.35)*0.01)
-        if(counter >= lim8):
+        if(count >= lim8):
            max_speed= 90
            driver.setSteeringAngle(  (-1.5)*0.01)
         if ((chnage_in_speed > 0)):
@@ -112,12 +112,12 @@ while driver.step() != -1:
         else:
             driver.setBrakeIntensity(0)
         
-    elif((counter>6700)):
+    elif((count>6700)):
         
-        if(counter > 8200):
+        if(count > 8200):
             max_speed = 50
         
-        if(counter == 4800):
+        if(count == 4800):
             max_speed= 200
         front_distance = min(sensors['front'].getValue() ,sensors['front left 0'].getValue() , sensors['front right 0'].getValue() )
         extent = sensors['front'].getMaxValue()
@@ -196,7 +196,7 @@ while driver.step() != -1:
         speed = max_speed * front_distance / extent
         driver.setCruisingSpeed(speed)
         chnage_in_speed = driver.getCurrentSpeed() - speed
-        if(counter > 6040): 
+        if(count > 6040): 
             destination = 1
         if(destination == 2):#1.3
             #if(x[0]<1.3): #then turn left
@@ -220,9 +220,9 @@ while driver.step() != -1:
            prevpos = x[0]
            #continue    
         prevpos = x[0] 
-        counter=counter +1
+        count=count +1
         if ((chnage_in_speed > 0)):
-            #print(counter)
+            #print(count)
             if((sensors['right'].getValue()>3)and(sensors['front right 2'].getValue()>8)and(not(sensors['right'].getValue()<7))): #you can turn right
                  #print("trying right")
                  if((x[0]<5.25)and(x[0]>5.15)): #means you are left, go middle
